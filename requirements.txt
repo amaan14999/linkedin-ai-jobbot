@@ -1,0 +1,18 @@
+# Core scraping and networking
+requests==2.32.5
+beautifulsoup4==4.14.3
+urllib3==2.6.3
+certifi==2026.1.4
+
+# Configuration parsing
+PyYAML==6.0.3
+
+# Task Scheduling (Keeps the loop running)
+schedule>=1.2.0
+
+# Modern Gemini API SDK
+google-genai>=0.3.0
+
+# Google Sheets integration
+gspread>=6.0.0
+google-auth>=2.0.0
