@@ -1,6 +1,8 @@
 import time
 import schedule
 
+from jobbot.pipeline import run_cycle
+
 
 def hourly_task() -> None:
     """
@@ -11,7 +13,7 @@ def hourly_task() -> None:
     print("\n[Scheduler] Waking up! Starting the hourly job fetch...")
 
     try:
-        # run_cycle(hours=1)
+        run_cycle(hours=1)
         print("[Scheduler] Hourly cycle complete. Going back to sleep.")
     except Exception as e:
         print(f"[Scheduler] ERROR during hourly cycle: {e}")
@@ -25,7 +27,7 @@ def main() -> None:
     print("\n[Init] Executing initial 24-hour fetch...")
 
     try:
-        # run_cycle(hours=24)
+        run_cycle(hours=24)
         pass
     except Exception as e:
         print(f"[Init] ERROR during initial cycle: {e}")
