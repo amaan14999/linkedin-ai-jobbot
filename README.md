@@ -108,6 +108,8 @@ linkedin-ai-jobbot/
    - Adjust your target keywords, location, experience levels, and blocked companies in the `linkedin` section.
    - Adjust your minimum AI score threshold and API rate limits.
 
+---
+
 ## Step 4: Running the Bot Locally 🤖
 
 To start the bot, ensure your virtual environment is active and run the main module from the root directory:
