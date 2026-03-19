@@ -5,16 +5,7 @@ from jobbot import linkedin_client
 from jobbot import gemini_client
 from jobbot import sheets_client
 from jobbot.config import load_config
-
-
-def load_resume() -> str:
-    """Helper function to load your base resume from the text file."""
-    try:
-        with open("my_resume.txt", "r", encoding="utf-8") as f:
-            return f.read()
-    except FileNotFoundError:
-        print("[!] my_resume.txt not found. Please create it in the root folder.")
-        return "Resume not provided."
+from jobbot.pdf_parser import parse_resume_to_text
 
 
 def run_cycle(hours: int) -> None:
@@ -23,7 +14,6 @@ def run_cycle(hours: int) -> None:
     """
 
     db.init_db()
-    resume_text = load_resume()
     cfg = load_config()
 
     li_cfg = cfg["linkedin"]
@@ -33,6 +23,9 @@ def run_cycle(hours: int) -> None:
 
     limit_rpm = app_cfg["rate_limits"]["rpm"]
     limit_rpd = app_cfg["rate_limits"]["rpd"]
+
+    resume_filename = app_cfg["resume_file"]
+    resume_text = parse_resume_to_text(pdf_filename=resume_filename)
 
     sleep_between_requests = 60.0 / limit_rpm if limit_rpm > 0 else 0
 
