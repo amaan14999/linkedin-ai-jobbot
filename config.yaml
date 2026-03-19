@@ -2,14 +2,15 @@ linkedin:
   keywords: "software engineer"
   location: "Bengaluru"
   distance: 40
-  # Target 2-3 years of experience (LinkedIn code '2')
+  # 1 = Internship, 2 = Entry-level, 3 = Associate, 4 = Mid-Senior level, 5 = Director, 6 = Executive
+  # Add multiple comma-separated values
   experience_levels: "2"
 
   # Optional: '1' is On-site, '2' is Remote, '3' is Hybrid. Leave blank for all.
   f_WT: "1,2,3"
 
   company_ids: []
-  easy_apply: false
+  easy_apply: false # Set it to true, if ONLY easy apply jobs wanted
   results_wanted: 100
   filter_out_companies:
     - "Wipro"
