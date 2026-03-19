@@ -4,3 +4,4 @@ __pycache__/
 .env
 data/
 resume.txt
+google_credentials.json
