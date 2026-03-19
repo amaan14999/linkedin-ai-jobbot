@@ -38,6 +38,7 @@ def get_sheet():
     if not first_row or "Job Title" not in first_row:
         # Insert the headers at the very top, pushing any existing data down to row 2
         sheet.insert_row(expected_headers, index=1)
+        sheet.format("A1:F1", {"textFormat": {"bold": True}})
         print("    -> [INFO] Configured sheet with column headers.")
 
     return sheet
