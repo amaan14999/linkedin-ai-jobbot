@@ -1,9 +1,10 @@
 # LinkedIn AI JobBot
+
 ![linkedin-ai-jobbot](https://socialify.git.ci/amaan14999/linkedin-ai-jobbot/image?language=1&name=1&owner=1&pattern=Solid&theme=Dark)
 
 An automated daemon that scrapes LinkedIn for targeted job postings, filters out previously seen roles, analyzes the job descriptions against your resume using Google's Gemini AI, and logs high-matching opportunities directly into a Google Sheet.
 
-## Prerequisites
+## Prerequisites 📋
 
 - Python 3.9 or higher
 - A Google Cloud Platform account
@@ -11,7 +12,7 @@ An automated daemon that scrapes LinkedIn for targeted job postings, filters out
 
 ---
 
-## Structure Overview
+## Structure Overview 📂
 
 ```
 linkedin-ai-jobbot/
@@ -36,7 +37,7 @@ linkedin-ai-jobbot/
    └─ pipeline.py             # The orchestrator tying it all together
 ```
 
-## Step 1: Local Setup & Virtual Environment
+## Step 1: Local Setup & Virtual Environment 💻
 
 1. Clone this repository to your local machine.
 2. Open your terminal and navigate to the root directory of the project.
@@ -55,7 +56,7 @@ linkedin-ai-jobbot/
    pip install -r requirements.txt
    ```
 
-## Step 2: API Keys & Credentials
+## Step 2: API Keys & Credentials 🔑
 
 **A. Google Gemini API**
 
@@ -93,7 +94,7 @@ linkedin-ai-jobbot/
    GOOGLE_SHEET_ID=your_google_sheet_id_here
    ```
 
-## Step 3: Personalization and Configuration
+## Step 3: Personalization and Configuration ⚙️
 
 1. **Add Your Resume:** Place your resume in the root directory of the project as a PDF file (e.g., `resume.pdf`).
 2. **Configure the Bot:** Open `config.yaml` and update the search parameters.
@@ -101,7 +102,7 @@ linkedin-ai-jobbot/
    - Adjust your target keywords, location, experience levels, and blocked companies in the `linkedin` section.
    - Adjust your minimum AI score threshold and API rate limits.
 
-## Step 4: Running the Bot Locally
+## Step 4: Running the Bot Locally 🤖
 
 To start the bot, ensure your virtual environment is active and run the main module from the root directory:
 
