@@ -31,6 +31,7 @@ def run_cycle(hours: int) -> None:
     cfg = load_config()
     li_cfg = cfg["linkedin"]
     min_score = cfg["app"]["min_ai_score"]
+    gemini_model = cfg["app"]["gemini_model"]
 
     # The Fast Sweep: Grab the lightweight job cards.
     jobs = linkedin_client.fetch_jobs(
@@ -43,6 +44,7 @@ def run_cycle(hours: int) -> None:
         company_ids=li_cfg["company_ids"],
         filter_out_companies=li_cfg["filter_out_companies"],
         max_results=li_cfg["results_wanted"],
+        distance=li_cfg["distance"],
     )
 
     if not jobs:
@@ -65,7 +67,9 @@ def run_cycle(hours: int) -> None:
         job.description = description or "Description could not be loaded."
 
         print("    -> Analyzing match with Gemini...")
-        ai_result = gemini_client.analyze_job_match(resume_text, job.description)
+        ai_result = gemini_client.analyze_job_match(
+            resume_text, job.description, model_name=gemini_model
+        )
         score = ai_result.get("score", 0)
 
         # Only push to Google Sheets if the score is greater than 6

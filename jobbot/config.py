@@ -28,5 +28,8 @@ def load_config(config_path: str = "config.yaml") -> dict:
             "results_wanted": li_data.get("results_wanted", 100),
             "filter_out_companies": li_data.get("filter_out_companies", []),
         },
-        "app": {"min_ai_score": app_data.get("min_ai_score", 6)},
+        "app": {
+            "min_ai_score": app_data.get("min_ai_score", 6),
+            "gemini_model": app_data.get("gemini_model", "gemini-3-flash"),
+        },
     }

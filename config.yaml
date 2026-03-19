@@ -9,7 +9,7 @@ linkedin:
   f_WT: "1,2,3"
 
   company_ids: []
-  easy_apply_only: false
+  easy_apply: false
   results_wanted: 200
   filter_out_companies:
     - "Wipro"
@@ -18,5 +18,5 @@ linkedin:
     - "Accenture services Pvt Ltd"
 
 app:
-  # Only save jobs to the Google Sheet if the AI scores them higher than this
   min_ai_score: 6
+  gemini_model: "gemini-3-flash"

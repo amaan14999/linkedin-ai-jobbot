@@ -39,7 +39,11 @@ def fetch_jobs(
     easy_apply: bool = False,
     company_ids: List[int] = None,
     filter_out_companies: List[str] = None,
-    max_results: int = 50,
+    max_results: int = 100,
+    distance: int = 40,
+    delay_seconds: float = 2.5,
+    jitter_seconds: float = 1.5,
+    timeout_seconds: int = 12,
 ) -> List[Job]:
     """
     Scrapes LinkedIn for jobs using strict API filters and localized exclusions.
@@ -67,6 +71,7 @@ def fetch_jobs(
             "location": location,
             "start": start_offset,
             "f_TPR": f"r{seconds_old}",
+            "distance": distance,
         }
 
         if experience_levels:
@@ -79,7 +84,9 @@ def fetch_jobs(
             params["f_C"] = ",".join(str(x) for x in company_ids)
 
         try:
-            resp = session.get(SEARCH_URL, params=params, timeout=12, verify=False)
+            resp = session.get(
+                SEARCH_URL, params=params, timeout=timeout_seconds, verify=False
+            )
         except Exception as e:
             print(f"[!] Network error: {e}")
             break
@@ -140,7 +147,7 @@ def fetch_jobs(
                 break
 
         start_offset += len(job_cards)
-        time.sleep(2.5 + random.random() * 1.5)
+        time.sleep(delay_seconds + random.random() * jitter_seconds)
 
     return jobs
 
