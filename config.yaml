@@ -20,3 +20,6 @@ linkedin:
 app:
   min_ai_score: 6
   gemini_model: "gemini-3-flash"
+  rate_limits:
+    rpm: 15
+    rpd: 500

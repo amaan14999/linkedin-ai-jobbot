@@ -31,5 +31,9 @@ def load_config(config_path: str = "config.yaml") -> dict:
         "app": {
             "min_ai_score": app_data.get("min_ai_score", 6),
             "gemini_model": app_data.get("gemini_model", "gemini-3-flash"),
+            "rate_limits": {
+                "rpm": app_data.get("rate_limits", {}).get("rpm", 5),
+                "rpd": app_data.get("rate_limits", {}).get("rpd", 20),
+            },
         },
     }

@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import date
 from jobbot.models import Job
 
 DB_PATH = os.getenv("DB_PATH", "data/jobs.db")
@@ -15,6 +16,8 @@ def init_db() -> None:
 
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
+
+        # Table to store unique job entries
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS jobs (
@@ -23,6 +26,16 @@ def init_db() -> None:
                 company TEXT,
                 job_url TEXT,
                 scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """
+        )
+
+        # Table to track API usage for rate limiting
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS api_usage (
+                date TEXT PRIMARY KEY,
+                requests INTEGER DEFAULT 0
             )
         """
         )
@@ -50,5 +63,35 @@ def insert_job(job: Job) -> None:
         cursor.execute(
             "INSERT INTO jobs (job_id, title, company, job_url) VALUES (?, ?, ?, ?)",
             (job.job_id, job.title, job.company_name, job.job_url),
+        )
+        conn.commit()
+
+
+def get_daily_api_requests() -> int:
+    """
+    Returns the number of Gemini API calls made today. Used for rate limiting.
+    """
+    today = date.today().isoformat()
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT requests FROM api_usage where date = ?", (today,))
+        result = cursor.fetchone()
+        return result[0] if result else 0
+
+
+def increment_api_requests() -> None:
+    """
+    Increases today's API usage counter
+    """
+    today = date.today().isoformat()
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO api_usage (date, requests) 
+            VALUES (?, 1) 
+            ON CONFLICT(date) DO UPDATE SET requests = requests + 1
+        """,
+            (today,),
         )
         conn.commit()

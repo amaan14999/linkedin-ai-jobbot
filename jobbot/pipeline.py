@@ -1,4 +1,4 @@
-import os
+import time
 
 from jobbot.models import Job
 from jobbot import db
@@ -22,16 +22,20 @@ def run_cycle(hours: int) -> None:
     """
     The main workflow: Scrape -> Filter -> Fetch Text -> Analyze -> Save.
     """
-    # Initialize DB to ensure our tables exist
+
     db.init_db()
-
-    # Load your resume into memory
     resume_text = load_resume()
-
     cfg = load_config()
+
     li_cfg = cfg["linkedin"]
-    min_score = cfg["app"]["min_ai_score"]
-    gemini_model = cfg["app"]["gemini_model"]
+    app_cfg = cfg["app"]
+    min_score = app_cfg["min_ai_score"]
+    gemini_model = app_cfg["gemini_model"]
+
+    limit_rpm = app_cfg["rate_limits"]["rpm"]
+    limit_rpd = app_cfg["rate_limits"]["rpd"]
+
+    sleep_between_requests = 60.0 / limit_rpm if limit_rpm > 0 else 0
 
     # The Fast Sweep: Grab the lightweight job cards.
     jobs = linkedin_client.fetch_jobs(
@@ -62,14 +66,30 @@ def run_cycle(hours: int) -> None:
         new_jobs_count += 1
         print(f"\n[+] New Job Found: {job.title} at {job.company_name}")
 
+        daily_usage = db.get_daily_api_requests()
+        if daily_usage >= limit_rpd:
+            print(
+                "[!] Daily API request limit reached. Skipping AI analysis until tomorrow."
+            )
+            sheets_client.append_job_to_sheet(
+                job,
+                {
+                    "score": "N/A",
+                    "improvements": "API limit reached. Manual review needed.",
+                },
+            )
+            db.insert_job(job)
+            continue
+
         print("    -> Fetching full description...")
         description = linkedin_client.fetch_description(job.job_url)
         job.description = description or "Description could not be loaded."
 
-        print("    -> Analyzing match with Gemini...")
+        print(f"    -> Analyzing match with {gemini_model}...")
         ai_result = gemini_client.analyze_job_match(
             resume_text, job.description, model_name=gemini_model
         )
+        db.increment_api_requests()
         score = ai_result.get("score", 0)
 
         # Only push to Google Sheets if the score is greater than 6
@@ -81,6 +101,11 @@ def run_cycle(hours: int) -> None:
 
         # We save it regardless of the score, so we never waste API calls grading it again.
         db.insert_job(job)
+
+        print(
+            f"    -> Sleeping for {sleep_between_requests:.1f}s to respect RPM limit..."
+        )
+        time.sleep(sleep_between_requests)
 
     print(
         f"\n[*] Cycle complete. Processed {new_jobs_count} new jobs out of {len(jobs)} fetched."
