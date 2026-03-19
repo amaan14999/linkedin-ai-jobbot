@@ -1,6 +1,5 @@
 import time
 
-from jobbot.models import Job
 from jobbot import db
 from jobbot import linkedin_client
 from jobbot import gemini_client
