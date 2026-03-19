@@ -1,0 +1,22 @@
+linkedin:
+  keywords: "software engineer"
+  location: "Bengaluru"
+  distance: 40
+  # Target 2-3 years of experience (LinkedIn code '2')
+  experience_levels: "2"
+
+  # Optional: '1' is On-site, '2' is Remote, '3' is Hybrid. Leave blank for all.
+  f_WT: "1,2,3"
+
+  company_ids: []
+  easy_apply_only: false
+  results_wanted: 200
+  filter_out_companies:
+    - "Wipro"
+    - "Infosys"
+    - "Turing"
+    - "Accenture services Pvt Ltd"
+
+app:
+  # Only save jobs to the Google Sheet if the AI scores them higher than this
+  min_ai_score: 6

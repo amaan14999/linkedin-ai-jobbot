@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from jobbot.models import Job
 
 DB_PATH = os.getenv("DB_PATH", "data/jobs.db")
 

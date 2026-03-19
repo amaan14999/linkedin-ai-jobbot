@@ -140,7 +140,7 @@ def fetch_jobs(
                 break
 
         start_offset += len(job_cards)
-        time.sleep(2.5 + random.random() * 1.5)  # Restored your original jitter logic
+        time.sleep(2.5 + random.random() * 1.5)
 
     return jobs
 
