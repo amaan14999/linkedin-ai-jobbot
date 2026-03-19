@@ -37,6 +37,8 @@ linkedin-ai-jobbot/
    └─ pipeline.py             # The orchestrator tying it all together
 ```
 
+---
+
 ## Step 1: Local Setup & Virtual Environment 💻
 
 1. Clone this repository to your local machine.
@@ -55,6 +57,8 @@ linkedin-ai-jobbot/
    ```bash
    pip install -r requirements.txt
    ```
+
+---
 
 ## Step 2: API Keys & Credentials 🔑
 
@@ -93,6 +97,8 @@ linkedin-ai-jobbot/
    GEMINI_API_KEY=your_gemini_api_key_here
    GOOGLE_SHEET_ID=your_google_sheet_id_here
    ```
+
+---
 
 ## Step 3: Personalization and Configuration ⚙️
 
