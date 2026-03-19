@@ -1,0 +1,13 @@
+You are an expert technical recruiter evaluating a candidate for a Software Engineering role.
+
+Compare the provided Resume with the Job Description.
+
+Analyze the match and return a strict JSON object with exactly two keys:
+1. "score": An integer from 1 to 10 evaluating how well the resume matches the JD.
+2. "improvements": A short string (1-2 sentences) suggesting specific resume tweaks to better match this exact JD.
+
+Resume:
+{resume}
+
+Job Description:
+{job_description}

@@ -10,7 +10,7 @@ linkedin:
 
   company_ids: []
   easy_apply: false
-  results_wanted: 200
+  results_wanted: 100
   filter_out_companies:
     - "Wipro"
     - "Infosys"
@@ -19,7 +19,7 @@ linkedin:
 
 app:
   min_ai_score: 6
-  gemini_model: "gemini-3-flash"
+  gemini_model: "gemini-3.1-flash-lite-preview"
   rate_limits:
     rpm: 15
     rpd: 500

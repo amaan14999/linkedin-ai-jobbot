@@ -1,7 +1,10 @@
 import time
 import schedule
+from dotenv import load_dotenv
 
 from jobbot.pipeline import run_cycle
+
+load_dotenv()
 
 
 def hourly_task() -> None:
