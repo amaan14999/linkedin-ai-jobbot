@@ -41,7 +41,7 @@ def is_duplicate(job_id: str) -> bool:
         return result is not None
 
 
-def insert_job(job_id: str, title: str, company: str, job_url: str) -> None:
+def insert_job(job: Job) -> None:
     """
     Saves a newly discovered job to the database so we never process it again.
     """
@@ -49,6 +49,6 @@ def insert_job(job_id: str, title: str, company: str, job_url: str) -> None:
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO jobs (job_id, title, company, job_url) VALUES (?, ?, ?, ?)",
-            (job_id, title, company, job_url),
+            (job.job_id, job.title, job.company_name, job.job_url),
         )
         conn.commit()
