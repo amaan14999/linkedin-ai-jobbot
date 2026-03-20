@@ -30,15 +30,19 @@ def get_sheet():
         "Date Found",
         "Job Title",
         "Company",
-        "AI Score",
-        "Resume Improvements",
+        "Overall AI Score",
+        "Missing Skills",
+        "Strengths",
+        "Dimension Breakdown",
+        "Improvements",
         "Link",
     ]
     # If the sheet is totally empty, OR if the first row doesn't contain our expected title
     if not first_row or "Job Title" not in first_row:
         # Insert the headers at the very top, pushing any existing data down to row 2
         sheet.insert_row(expected_headers, index=1)
-        sheet.format("A1:F1", {"textFormat": {"bold": True}})
+        sheet.format("A1:I1", {"textFormat": {"bold": True}})
+        sheet.format("A2:I1000", {"textFormat": {"bold": False}})
         print("    -> [INFO] Configured sheet with column headers.")
 
     return sheet
@@ -53,11 +57,30 @@ def append_job_to_sheet(job: Job, ai_analysis: dict) -> None:
 
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
 
+        # 1. Safely extract arrays and join them into comma-separated strings
+        missing_skills = ", ".join(ai_analysis.get("missing_critical_skills", []))
+        strengths = ", ".join(ai_analysis.get("matching_strengths", []))
+
+        # 2. Extract the dimension scores and format them into a single readable cell
+        dims = ai_analysis.get("dimension_scores", {})
+        dimension_breakdown = (
+            f"Skills: {dims.get('hard_skills_match', 'N/A')} | "
+            f"Exp: {dims.get('experience_level_alignment', 'N/A')} | "
+            f"Impact: {dims.get('project_impact_alignment', 'N/A')} | "
+            f"Resp: {dims.get('responsibility_complexity_match', 'N/A')} | "
+            f"Edu: {dims.get('education_certifications', 'N/A')} | "
+            f"ATS: {dims.get('keywords_ats_compatibility', 'N/A')}"
+        )
+
+        # 3. Map everything to the 9 columns
         new_row = [
             current_time,
             job.title,
             job.company_name,
             ai_analysis.get("score", "N/A"),
+            missing_skills if missing_skills else "None",
+            strengths if strengths else "None",
+            dimension_breakdown,
             ai_analysis.get("improvements", "N/A"),
             job.job_url,
         ]

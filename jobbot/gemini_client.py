@@ -4,7 +4,9 @@ from google import genai
 from google.genai import types
 
 
-def analyze_job_match(resume_text: str, job_description: str, model_name: str) -> dict:
+def analyze_job_match(
+    resume_text: str, job_description: str, min_score: int, model_name: str
+) -> dict:
     """
     Sends the resume and JD to Gemini and returns a parsed JSON dictionary.
     """
@@ -26,7 +28,7 @@ def analyze_job_match(resume_text: str, job_description: str, model_name: str) -
 
     # 3. Inject the actual resume and JD into the prompt
     final_prompt = prompt_template.format(
-        resume=resume_text, job_description=job_description
+        resume=resume_text, min_score=min_score, job_description=job_description
     )
 
     # 4. Call the Gemini API

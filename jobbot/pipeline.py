@@ -79,13 +79,16 @@ def run_cycle(hours: int) -> None:
 
         print(f"    -> Analyzing match with {gemini_model}...")
         ai_result = gemini_client.analyze_job_match(
-            resume_text, job.description, model_name=gemini_model
+            resume_text=resume_text,
+            job_description=job.description,
+            min_score=min_score,
+            model_name=gemini_model,
         )
         db.increment_api_requests()
         score = ai_result.get("score", 0)
 
         # Only push to Google Sheets if the score is greater than 6
-        if score > min_score:
+        if score >= min_score:
             print(f"    -> High Score ({score}/10)! Saving to Google Sheets...")
             sheets_client.append_job_to_sheet(job, ai_result)
         else:

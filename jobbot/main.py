@@ -31,7 +31,6 @@ def main() -> None:
 
     try:
         run_cycle(hours=24)
-        pass
     except Exception as e:
         print(f"[Init] ERROR during initial cycle: {e}")
 
