@@ -19,7 +19,7 @@ linkedin:
     - "Accenture services Pvt Ltd"
 
 app:
-  resume_file: Ayaan_Resume_2.pdf
+  resume_file: Name_Resume.pdf
   min_ai_score: 6
   gemini_model: "gemini-3.1-flash-lite-preview"
   rate_limits:
