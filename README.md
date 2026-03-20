@@ -4,6 +4,26 @@
 
 An automated daemon that scrapes LinkedIn for targeted job postings, filters out previously seen roles, analyzes the job descriptions against your resume using Google's Gemini AI, and logs high-matching opportunities directly into a Google Sheet.
 
+## What It Does
+
+- 🔄 **Scheduled Scraping** — Runs every hour, pulling jobs posted
+  in the last hour (first run covers last 24h)
+- 🧹 **Auto-Deduplication** — Drops previously seen postings,
+  only processes fresh listings
+- 🧠 **AI-Powered Analysis** — Sends your resume + each JD to
+  Google Gemini for evaluation
+- 📊 **Six-Dimension Scoring** — Rates each match across hard skills,
+  experience level, project impact, responsibility complexity,
+  ATS compatibility, and education
+- ✏️ **Resume Improvements** — For matches scoring ≥ 6/10, generates
+  up to 5 prioritized, actionable edits specifying what to add,
+  where to add it, and exactly how to phrase it
+- 📋 **Google Sheets Logging** — Appends new results via API with
+  scores, dimensional breakdowns, skill gaps, strengths, and
+  suggested edits
+- 🐳 **Containerized** — Fully Dockerized for deploy-anywhere
+  portability
+
 ## Prerequisites 📋
 
 - Python 3.9 or higher
