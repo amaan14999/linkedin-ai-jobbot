@@ -2,6 +2,7 @@ import json
 import os
 from google import genai
 from google.genai import types
+from jobbot.models import JobAnalysis
 
 
 def analyze_job_match(
@@ -39,6 +40,7 @@ def analyze_job_match(
             config=types.GenerateContentConfig(
                 # Force pure JSON output so we can parse it reliably
                 response_mime_type="application/json",
+                response_schema=JobAnalysis,
                 # Low temperature (0.2) forces analytical, consistent scoring
                 temperature=0.2,
             ),
