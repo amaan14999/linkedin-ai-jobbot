@@ -101,7 +101,8 @@ def run_cycle(hours: int) -> None:
             f"    -> Sleeping for {sleep_between_requests:.1f}s to respect RPM limit..."
         )
         time.sleep(sleep_between_requests)
+        timestamp = time.strftime("%d-%m-%y %H:%M:%S", time.localtime())
 
     print(
-        f"\n[*] Cycle complete. Processed {new_jobs_count} new jobs out of {len(jobs)} fetched."
+        f"\n[*] [{timestamp}] Cycle complete. Processed {new_jobs_count} new jobs out of {len(jobs)} fetched."
     )
