@@ -28,6 +28,7 @@ def get_sheet():
     first_row = sheet.row_values(1)
     expected_headers = [
         "Date Found",
+        "Time Found",
         "Job Title",
         "Company",
         "Overall AI Score",
@@ -55,7 +56,8 @@ def append_job_to_sheet(job: Job, ai_analysis: dict) -> None:
     try:
         sheet = get_sheet()
 
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M")
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_time = datetime.now().strftime("%H:%M:%S")
 
         # 1. Safely extract arrays and join them into comma-separated strings
         missing_skills = ", ".join(ai_analysis.get("missing_critical_skills", []))
@@ -74,6 +76,7 @@ def append_job_to_sheet(job: Job, ai_analysis: dict) -> None:
 
         # 3. Map everything to the 9 columns
         new_row = [
+            current_date,
             current_time,
             job.title,
             job.company_name,
