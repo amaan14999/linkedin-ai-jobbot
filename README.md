@@ -15,7 +15,7 @@ An automated daemon that scrapes LinkedIn for targeted job postings, filters out
 - 📊 **Six-Dimension Scoring** — Rates each match across hard skills,
   experience level, project impact, responsibility complexity,
   ATS compatibility, and education
-- ✏️ **Resume Improvements** — For matches scoring ≥ 6/10, generates
+- ✏️ **Resume Improvements** — For matches scoring ≥ `min_ai_score`, generates
   up to 5 prioritized, actionable edits specifying what to add,
   where to add it, and exactly how to phrase it
 - 📋 **Google Sheets Logging** — Appends new results via API with
